@@ -246,6 +246,9 @@ function runBot() {
 
 runBot();
 
+// cycles the code every 2 hours, so runBot will occur every 2 hours
+setInterval(runBot, 2000 * 60 * 60);
+
 // Try to retweet something as soon as we run the program...
 //retweetLatest();
 //tweet();
