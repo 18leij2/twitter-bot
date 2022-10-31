@@ -21,7 +21,9 @@ function between(min, max) {
 }
 
 //debug
-var debug = true;	
+var debug = true;
+
+var numArr= [];
 
 // pre selected quotes
 var pre = [
@@ -211,7 +213,19 @@ function runBot() {
         // occur, to reduce spam and increase variation
 
 		var finalRand = Math.floor(Math.random() * 7);
+
+		if (numArr.length == 7) {
+			numArr = [];
+		}
+
+		while (numArr.includes(finalRand) !== false) {
+			finalRand = Math.floor(Math.random() * 7);
+		}
+
+		numArr.push(finalRand);
+
 		console.log(finalRand + "is the condition");
+		console.log(numArr);	
         //tweet(tweetText);     commented to reduce spam during testing
         //shoutOut();
 
