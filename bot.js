@@ -8,7 +8,6 @@ var request = require('request');
 // We need to include our configuration file
 var T = new Twit(require('./config.js'));
 var fs = require('fs');
-var b64content = fs.readFileSync('./pic/136.png', {encoding: 'base64'})
 
 // This is the URL of a search for the latest tweets on the '#pokemon' hashtag.
 var PokemonSearch = {q: "#pokemon", count: 10, result_type: "recent"}; 
@@ -86,6 +85,7 @@ function tweet() {
 			}
 	});
 }
+var b64content = fs.readFileSync('./pic/1.png', {encoding: 'base64'})
 
 //tweet picture
 function tweetPic() {
