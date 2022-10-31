@@ -5,10 +5,12 @@ var request = require('request');
 // DEBUG
 var debug = false;		// if we don't want it to post to Twitter! Useful for debugging!
 
+// attempt to make a pick function, I didn't use this but useful for functions
 Array.prototype.pick = function() {
 	return this[Math.floor(Math.random() * this.length)];
 }
 
+// tweet random quote using the poke api, tweetText comes from the runBot() function
 function tweet(tweetText) {
     if(debug) 
 		console.log('Debug mode: ', tweetText);
@@ -23,6 +25,7 @@ function tweet(tweetText) {
 		});
 }
 
+// chooses a random follower and shouts them out with a tweet
 function shoutOut() {
     var compliments = [
         "You da best!",
@@ -36,7 +39,7 @@ function shoutOut() {
           console.log('Error: ', err);
         }
         else {
-            //console.log(reply);
+            //console.log(reply);     for testing purposes, commented due to console spam
             var shoutOuters = reply.users;
             var luckyUser = shoutOuters[Math.floor(Math.random() * shoutOuters.length)].screen_name;
             console.log(shoutOuters);
@@ -44,8 +47,8 @@ function shoutOut() {
           if (debug) 
               console.log("debug shouted " + luckyUser);
           else {
-              //Now shoutout that user
-              T.post('statuses/update', { status: ("Shoutout to " + luckyUser + " for the follow! " + compliments[Math.floor(Math.random() * 5)]) }, function (err, reply) {
+              // Now shoutout that user, switch compliments.length back for 5 if the code does not work
+              T.post('statuses/update', { status: ("Shoutout to " + luckyUser + " for the follow! " + compliments[Math.floor(Math.random() * compliments.length)]) }, function (err, reply) {
                   if (err != null) {
                       console.log('Error: ', err);
                   }
@@ -58,8 +61,9 @@ function shoutOut() {
   });
 }
     
-
+// runs the bot, this function is run every iteration similar to the examplebot
 function runBot() {
+    // takes the api data, parse it, get random numbers and assign to certain data
     request("https://pokeapi.co/api/v2/pokemon/", function(err, response, data) {
         var newData = JSON.parse(data);
         var pokeList = newData.results;
@@ -78,20 +82,19 @@ function runBot() {
         ]
 
         var tweetText = tweetArr[tweetNum];
-        //tweet(tweetText);
+
+        // future updates will implement another random picker using switch case that will
+        // choose which functions out of tweet, shoutout, and all your other methods will
+        // occur, to reduce spam and increase variation
+        //tweet(tweetText);     commented to reduce spam during testing
         shoutOut();
     })
 }
 
+// runs the bot
 runBot();
 console.log("did I tweet?");
  
-
+// cycles the code every 2 hours, so runBot will occur every 2 hours
 setInterval(runBot, 2000 * 60 * 60);
 
-
-// Run the bot
-//runBot();
-
-// And recycle every hour
-//setInterval(runBot, 1000 * 60 * 60);
