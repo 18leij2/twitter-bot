@@ -146,6 +146,66 @@ function mentions() {
 	  });
 }
 
+function alterTweet() {
+	//replying to anyone who didn't mention us is against Twitter violations
+	T.get('search/tweets', UsSearch, function(error, data) {
+		//log out any errors and responses
+		console.log(error, data);
+
+		//if our search request to the server had no errors...
+		if (!error) {
+			var alter = data.statuses[between(0, data.statuses.length)];
+			var tweet = alter.text;
+			var alterId = alter.id_str
+			var toReply = alter.user.screen_name;
+
+			//make sure to not reply to ourselves
+			while (toReply == '2700twitbot') {
+				var alter = data.statuses[between(0, data.statuses.length)];
+				var tweet = alter.text;
+				var alterId = alter.id_str
+				var toReply = alter.user.screen_name;
+			}
+			
+			//console.log("Tweet to reply to: ", tweet);
+			//console.log("alterID is: ", alterId);
+
+			//alter text by making vowels uppercase
+			var finalTweet = tweet.replace(/a|e|i|o|u/gi, function(x) {
+				return x.toUpperCase();
+			});
+
+			//cleanup
+			finalTweet = finalTweet.replace('RT', '');
+			finalTweet = finalTweet.trim();
+
+			if (finalTweet.startsWith('@')) {
+				var pos = 0;
+				while (!finalTweet.startsWith(' ', pos)) {
+					pos++;
+				}
+
+				finalTweet = finalTweet.substring(pos);
+			}
+
+			//add the pokemon hashtag to increase our following
+			finalTweet = finalTweet + "\n #pokemon";
+
+			//@ the person who we reply to
+			finalTweet = '@' + toReply + ' ' + finalTweet;
+
+			//post the reply
+			T.post('statuses/update', {status: finalTweet, in_reply_to_status_id: alterId}, function(error, data) {
+				if (error != null) {
+					console.log('Error: ', error);
+				} else {
+					console.log('Replied: ', finalTweet);
+				}
+			});
+		}
+	});
+}
+
 // tweet random quote using the poke api, tweetText comes from the runBot() function
 function tweetRand(tweetText) {
     if(debug) 
