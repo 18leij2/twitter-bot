@@ -28,11 +28,11 @@ var numArr = [];
 
 // pre selected quotes
 var pre = [
-	"I love pokemon",
-	"What is your favorite pokemon?", 
-	"I cannot wait for the new pokemon tcg",
-	"Thinking about snorlax",
-	"Pokemon are so cute!",	
+	"I love pokemon #Pokemon",
+	"What is your favorite pokemon? #Pokemon", 
+	"I cannot wait for the new pokemon tcg #Pokemon",
+	"Thinking about snorlax #Pokemon",
+	"Pokemon are so cute! #Pokemon",	
 ];
 
 //pick function to pic random
@@ -106,7 +106,7 @@ function tweetPic() {
 		var meta_params = {media_id: mediaIDStr, alt_text: {text: altText}}
 		T.post('media/metadata/create', meta_params, function (err, data, response) {
 			if (!err) {
-				var params = {status: 'loving pokemon life', media_ids: [mediaIDStr] }
+				var params = {status: 'loving pokemon life #Pokemon', media_ids: [mediaIDStr] }
 				T.post('statuses/update', params, function (err, data, response) {
 					console.log(data)
 				})
@@ -211,11 +211,11 @@ function runBot() {
         var tweetNum = Math.floor(Math.random() * 5);
 
         tweetArr = [
-            pokeName + " is my favorite pokemon.",
-            "your pokemon sucks. it's nowhere near as good as " + pokeName,
-            "i literally know nothing about pokemon but i think " + pokeName + " is cool",
-            pokeName + " is the pokemon of the day!",
-            "i challenge you all to a pokemon duel! i'll use my favorite pokemon, " + pokeName
+            pokeName + " is my favorite pokemon. #Pokemon",
+            "your pokemon sucks. it's nowhere near as good as " + pokeName + " #Pokemon",
+            "i literally know nothing about pokemon but i think " + pokeName + " is cool! #Pokemon",
+            pokeName + " is the pokemon of the day! #Pokemon",
+            "i challenge you all to a pokemon duel! i'll use my favorite pokemon, " + pokeName + "#Pokemon"
         ]
 
         var tweetText = tweetArr[tweetNum];
