@@ -85,7 +85,8 @@ function tweet() {
 			}
 	});
 }
-var b64content = fs.readFileSync('./pic/1.png', {encoding: 'base64'})
+
+var b64content = fs.readFileSync('./pic/2.png', {encoding: 'base64'})
 
 //tweet picture
 function tweetPic() {
@@ -108,7 +109,7 @@ function tweetPic() {
 }
 
 //search for mentions
-var UsSearch = {q: "@2700twitbot", count: 10, result_type: "recent"}; 
+var UsSearch = {q: "@PokeBot2700", count: 10, result_type: "recent"}; // replaced @2700twitbot
 
 //if someone mentions us we will respond to tweet
 function mentions() {
