@@ -87,10 +87,19 @@ function tweet() {
 }
 var b64content = fs.readFileSync('./pic/1.png', {encoding: 'base64'})
 
+var prePic = [
+	fs.readFileSync('./pic/1.png', {encoding: 'base64'}),
+	fs.readFileSync('./pic/2.png', {encoding: 'base64'}),
+	fs.readFileSync('./pic/3.png', {encoding: 'base64'}),
+	fs.readFileSync('./pic/4.png', {encoding: 'base64'}),
+	fs.readFileSync('./pic/5.png', {encoding: 'base64'}),
+	fs.readFileSync('./pic/6.png', {encoding: 'base64'}),
+	fs.readFileSync('./pic/7.png', {encoding: 'base64'}),
+];
 //tweet picture
+//var b64content = fs.readFileSync('./pic/1.png', {encoding: 'base64'})
 function tweetPic() {
-	console.log("wefwe")
-	T.post('media/upload', {media_data: b64content}, function (err, data, response) {
+	T.post('media/upload', {media_data: prePic.pick()}, function (err, data, response) {
 		var mediaIDStr = data.media_id_string
 		var altText = "Lovely Pokemon"
 		var meta_params = {media_id: mediaIDStr, alt_text: {text: altText}}
@@ -98,14 +107,12 @@ function tweetPic() {
 			if (!err) {
 				var params = {status: 'loving pokemon life', media_ids: [mediaIDStr] }
 				T.post('statuses/update', params, function (err, data, response) {
-					console.log(data);
+					console.log(data)
 				})
-			} else if (err) {
-				console.log(err);
 			}
 		})
 	})
-}
+}//
 
 //search for mentions
 var UsSearch = {q: "@2700twitbot", count: 10, result_type: "recent"}; 
