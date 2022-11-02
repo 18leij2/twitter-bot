@@ -89,6 +89,7 @@ var b64content = fs.readFileSync('./pic/1.png', {encoding: 'base64'})
 
 //tweet picture
 function tweetPic() {
+	console.log("wefwe")
 	T.post('media/upload', {media_data: b64content}, function (err, data, response) {
 		var mediaIDStr = data.media_id_string
 		var altText = "Lovely Pokemon"
@@ -97,8 +98,10 @@ function tweetPic() {
 			if (!err) {
 				var params = {status: 'loving pokemon life', media_ids: [mediaIDStr] }
 				T.post('statuses/update', params, function (err, data, response) {
-					console.log(data)
+					console.log(data);
 				})
+			} else if (err) {
+				console.log(err);
 			}
 		})
 	})
@@ -225,7 +228,8 @@ function runBot() {
 		numArr.push(finalRand);
 
 		console.log(finalRand + "is the condition");
-		console.log(numArr);	
+		console.log(numArr);
+		
         //tweet(tweetText);     commented to reduce spam during testing
         //shoutOut();
 
