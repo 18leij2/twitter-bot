@@ -354,7 +354,7 @@ function runBot() {
 				tweetPic();
 				break;
 			case 4:
-				//follow();
+				followFollowers();
 				break;
 			case 5:
 				tweetRand(tweetText);
@@ -364,6 +364,9 @@ function runBot() {
 				break;
 			case 7:
 				alterTweet();
+				break;
+			case 8:
+				followPokemonTweeters();
 				break;
 			default:
 				console.log("Error, the default switch case has been reached.");
