@@ -72,7 +72,7 @@ function retweetLatest() {
 	});
 }
 
-//tweet random quaote
+//tweet random quote
 function tweet() {
 	var tweetText = pre.pick();
 	if(debug) 
@@ -88,8 +88,7 @@ function tweet() {
 	});
 }
 
-var b64content = fs.readFileSync('./pic/2.png', {encoding: 'base64'})
-
+//list of picture to randomly choose from
 var prePic = [
 	fs.readFileSync('./pic/1.png', {encoding: 'base64'}),
 	fs.readFileSync('./pic/2.png', {encoding: 'base64'}),
@@ -100,7 +99,6 @@ var prePic = [
 	fs.readFileSync('./pic/7.png', {encoding: 'base64'}),
 ];
 //tweet picture
-//var b64content = fs.readFileSync('./pic/1.png', {encoding: 'base64'})
 function tweetPic() {
 	T.post('media/upload', {media_data: prePic.pick()}, function (err, data, response) {
 		var mediaIDStr = data.media_id_string
