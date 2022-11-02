@@ -321,16 +321,16 @@ function runBot() {
         // Random fair picker system that will choose randomly, but cycle through each function once only
 		// In essence, once a function is put in the numArray, it will not run again until every function has run 
 
-		var finalRand = Math.floor(Math.random() * 8);
+		var finalRand = Math.floor(Math.random() * 9);
 
 		// if every function has been run, clear the array
-		if (numArr.length == 8) {
+		if (numArr.length == 9) {
 			numArr = [];
 		}
 
 		// keeps randomly updating finalRand until it is not found in numArray
 		while (numArr.includes(finalRand) !== false) {
-			finalRand = Math.floor(Math.random() * 8);
+			finalRand = Math.floor(Math.random() * 9);
 		}
 
 		// once found, the function will run, so add the number to numArray
