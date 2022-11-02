@@ -3,6 +3,7 @@ const Twitter = require('twit');
 var Twit = require('twit');
 var config = require('./config');
 
+// Request is needed to retrieve data from the API for the tweetRand() function
 var request = require('request');
 
 // We need to include our configuration file
@@ -12,17 +13,18 @@ var fs = require('fs');
 // This is the URL of a search for the latest tweets on the '#pokemon' hashtag.
 var PokemonSearch = {q: "#pokemon", count: 10, result_type: "recent"}; 
 
-//function to find a random number
+// Function to find a random number
 function between(min, max) {  
 	return Math.floor(
 	  Math.random() * (max - min) + min
 	)
 }
 
-//debug
-var debug = true;
+// Debug for testing purposes
+var debug = false;
 
-var numArr= [];
+// numArr is declared to hold integers temporarily
+var numArr = [];
 
 // pre selected quotes
 var pre = [
@@ -116,7 +118,7 @@ function tweetPic() {
 }//
 
 //search for mentions
-var UsSearch = {q: "@PokeBot2700", count: 10, result_type: "recent"}; // replaced @2700twitbot
+var UsSearch = {q: "@2700twitbot", count: 10, result_type: "recent"};
 
 //if someone mentions us we will respond to tweet
 function mentions() {
@@ -175,7 +177,8 @@ function shoutOut() {
           console.log('Error: ', err);
         }
         else {
-            //console.log(reply);     for testing purposes, commented due to console spam
+			// This code searches through the data until we reach the user
+            //console.log(reply);
             var shoutOuters = reply.users;
             var luckyUser = shoutOuters[Math.floor(Math.random() * shoutOuters.length)].screen_name;
             console.log(shoutOuters);
@@ -183,7 +186,7 @@ function shoutOut() {
           if (debug) 
               console.log("debug shouted " + luckyUser);
           else {
-              // Now shoutout that user, switch compliments.length back for 5 if the code does not work
+              // Now shoutout that user - switch compliments.length back for 5 if the code does not work
               T.post('statuses/update', { status: ("Shoutout to " + luckyUser + " for the follow! " + compliments[Math.floor(Math.random() * compliments.length)]) }, function (err, reply) {
                   if (err != null) {
                       console.log('Error: ', err);
@@ -219,28 +222,28 @@ function runBot() {
 
         var tweetText = tweetArr[tweetNum];
 
-        // future updates will implement another random picker using switch case that will
-        // choose which functions out of tweet, shoutout, and all your other methods will
-        // occur, to reduce spam and increase variation
+        // Random fair picker system that will choose randomly, but cycle through each function once only
+		// In essence, once a function is put in the numArray, it will not run again until every function has run 
 
 		var finalRand = Math.floor(Math.random() * 7);
 
+		// if every function has been run, clear the array
 		if (numArr.length == 7) {
 			numArr = [];
 		}
 
+		// keeps randomly updating finalRand until it is not found in numArray
 		while (numArr.includes(finalRand) !== false) {
 			finalRand = Math.floor(Math.random() * 7);
 		}
 
+		// once found, the function will run, so add the number to numArray
 		numArr.push(finalRand);
 
 		console.log(finalRand + "is the condition");
 		console.log(numArr);
 		
-        //tweet(tweetText);     commented to reduce spam during testing
-        //shoutOut();
-
+        // This switch case has a case for each integer, with a specific function assigned to each case
 		switch (finalRand) {
 			case 0:
 				retweetLatest();
@@ -270,14 +273,8 @@ function runBot() {
     })
 }
 
+// runBot() is called the first time the code is run
 runBot();
 
 // cycles the code every 2 hours, so runBot will occur every 2 hours
 setInterval(runBot, 2000 * 60 * 60);
-
-// Try to retweet something as soon as we run the program...
-//retweetLatest();
-//tweet();
-//mentions();
-//tweetPic();
-//follow();
