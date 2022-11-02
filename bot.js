@@ -258,6 +258,44 @@ function shoutOut() {
   });
 }
 
+//follows back the most recent person that followed
+function followFollowers() {
+	T.get('followers/list', {count:1}, function(err, reply) {
+		if (err != null) {
+			console.log('Error: ', err)
+		} else {
+			var follower = reply.users[0].screen_name;
+			console.log(follower);
+			T.post('friendships/create', {screen_name: follower }, function(err, reply) {
+				if (err != null) {
+					console.log('Error: ', err);
+				} else {
+					console.log('Followed: ' + follower);
+				}
+			});
+		}
+	});
+}
+
+//follows random tweeter from 100 most recent #pokemon tweets
+function followPokemonTweeters() {
+	T.get('search/tweets', PokemonSearch, function (err, reply) {
+		if (err != null) {
+			console.log('Error: ', err)
+		} else {
+			var tweetId = reply.statuses[Math.floor(Math.random() * 10)].user.screen_name;
+			console.log(tweetId);
+			T.post('friendships/create', {screen_name: tweetId }, function(err, reply) {
+		    	if (err != null) {
+		     		console.long('Error: ', err);
+			 	} else {
+			 		console.log('Followed fellow pokemon enthusiast: ' + tweetId)
+			 	}
+			});
+		}
+	});
+}
+
 // runs the bot, this function is run every iteration similar to the examplebot
 function runBot() {
     // takes the api data, parse it, get random numbers and assign to certain data
