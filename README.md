@@ -1,5 +1,5 @@
 # Pokemon Twitter Bot
-This Twitter bot was made for an LMC2700 assignment. It performs randomized actions in set intervals, including tweeting, retweeting, following, replying, and more. 
+This Twitter bot was made for an LMC2700 assignment. It performs randomized actions in set intervals, including tweeting, retweeting, following, replying, and more. The bot account can be viewed [here](https://twitter.com/2700twitbot).
 
 ## Project Setup
 1. To set up the project on a Windows device, install [Node.js](https://nodejs.org/en/download/) and [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) if not installed already.
